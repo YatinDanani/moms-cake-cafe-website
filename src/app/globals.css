@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #faf2e6;
+  --cocoa: #2e1d14;
+  --coffee: #7a4b26;
+  --coffee-dark: #5f3a1d;
+  --caramel: #b98a52;
+  --mocha: #5b4334;
+  --tan: #ebdfc7;
+  --latte: #d9bc8c;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-cocoa: var(--cocoa);
+  --color-coffee: var(--coffee);
+  --color-coffee-dark: var(--coffee-dark);
+  --color-caramel: var(--caramel);
+  --color-mocha: var(--mocha);
+  --color-tan: var(--tan);
+  --color-latte: var(--latte);
+  --font-display: var(--font-playfair);
+  --font-script: var(--font-pinyon);
+  --font-body: var(--font-figtree);
+}
+
+body {
+  background: var(--cream);
+  color: var(--cocoa);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-rise {
+    animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
