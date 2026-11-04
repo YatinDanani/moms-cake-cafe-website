@@ -49,5 +49,8 @@ export function getLocalBusinessSchema() {
       addressCountry: "CA",
     },
     openingHoursSpecification,
+    // Only confirmed real profile links go here — Instagram and TikTok are
+    // still placeholders in content.ts, so they're left out for now.
+    sameAs: [business.social.facebook],
   };
 }

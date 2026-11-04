@@ -13,10 +13,10 @@ export const business = {
   ],
   mapLink:
     "https://www.google.com/maps/search/?api=1&query=2060+Oak+Bay+Ave%2C+Victoria%2C+BC+V8R+1E4",
-  // Placeholder handles until the client supplies live profile links.
   social: {
+    // Instagram and TikTok are still placeholder handles until confirmed.
     instagram: "https://instagram.com/momscakecafe",
-    facebook: "https://facebook.com/momscakecafe",
+    facebook: "https://www.facebook.com/profile.php?id=100091969637518",
     tiktok: "https://www.tiktok.com/@momscakecafe",
   },
 } as const;
