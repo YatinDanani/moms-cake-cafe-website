@@ -1,60 +1,87 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { business, cateringPackages } from "@/lib/content";
+import { cateringPackages } from "@/lib/content";
+import { CateringForm } from "@/components/CateringForm";
 
 export const metadata: Metadata = {
-  title: "Catering & Events — Mom's Cake Café",
-  description: "Dessert tables, event cakes, and coffee service for weddings and gatherings around Victoria.",
+  title: "Catering & Events | Mom's Cake Café",
+  description: "Tailored catering packages, including custom cakes, full meal catering, a coffee bar, and dessert buffets, for events around Victoria.",
 };
 
-const packageColors = ["bg-coffee text-cream", "bg-caramel text-cocoa", "bg-mocha text-cream"];
+const colorMap: Record<number, { bg: string; text: string }> = {
+  0: { bg: "bg-coffee", text: "text-cream" },
+  1: { bg: "bg-caramel", text: "text-cocoa" },
+  2: { bg: "bg-mocha", text: "text-cream" },
+  3: { bg: "bg-latte", text: "text-cocoa" },
+};
 
 export default function CateringPage() {
   return (
     <>
-      <section className="bg-cream">
-        <div className="mx-auto max-w-3xl px-5 sm:px-8 pt-16 pb-10 text-center">
-          <h1 className="font-display text-4xl sm:text-5xl font-semibold">Catering & events</h1>
-          <p className="mt-4 text-cocoa/75">
-            Showers, office parties, weddings — if there&apos;s a table to fill,
-            we&apos;ll fill it. Most events book 3–6 weeks out, sooner for peak
-            wedding season.
+      {/* Hero */}
+      <section className="relative overflow-hidden min-h-[420px] sm:min-h-[520px] flex items-end">
+        <div className="absolute inset-0 bg-gradient-to-br from-mocha via-coffee to-cocoa" />
+        <div className="absolute inset-0 bg-gradient-to-t from-cocoa via-cocoa/50 to-cocoa/10" />
+        <div className="relative z-10 w-full mx-auto max-w-4xl px-5 sm:px-8 pt-20 pb-14 text-center">
+          <p className="font-script text-2xl text-latte">Catering &amp; events</p>
+          <h1 className="font-display text-4xl sm:text-6xl font-semibold leading-tight text-cream mt-1">
+            Let us make your{" "}
+            <span className="font-script font-normal text-latte">celebration special</span>
+          </h1>
+          <p className="mt-6 text-lg text-cream/85 max-w-xl mx-auto">
+            From intimate gatherings to grand celebrations, we offer tailored
+            catering packages featuring our handcrafted cakes, pastries,
+            meals, and beverages.
           </p>
         </div>
       </section>
 
+      {/* Packages */}
       <section className="bg-tan">
-        <div className="mx-auto max-w-5xl px-5 sm:px-8 py-16 grid sm:grid-cols-3 gap-6">
-          {cateringPackages.map((pkg, i) => (
-            <div key={pkg.name} className={`${packageColors[i % packageColors.length]} rounded-3xl p-7`}>
-              <p className="font-display text-xl font-semibold">{pkg.name}</p>
-              <p className="mt-1 text-sm opacity-80">{pkg.serves}</p>
-              <p className="mt-4 text-sm opacity-90">{pkg.text}</p>
-            </div>
-          ))}
+        <div className="mx-auto max-w-5xl px-5 sm:px-8 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {cateringPackages.map((pkg, i) => {
+            const c = colorMap[i % 4];
+            return (
+              <div key={pkg.name} className={`${c.bg} ${c.text} rounded-3xl p-6`}>
+                <p className="font-display text-lg font-semibold">{pkg.name}</p>
+                <p className="mt-2 text-sm opacity-90">{pkg.text}</p>
+              </div>
+            );
+          })}
         </div>
       </section>
 
+      {/* Catering menu teaser */}
       <section className="bg-cream text-center">
         <div className="mx-auto max-w-xl px-5 sm:px-8 py-16">
-          <h2 className="font-display text-3xl font-semibold">Planning an event?</h2>
-          <p className="mt-3 text-cocoa/75">
-            Email us the date, guest count, and what you have in mind, and
-            we&apos;ll put together options and pricing.
+          <p className="font-script text-2xl text-coffee">Catering menu</p>
+          <h2 className="font-display text-3xl sm:text-4xl font-semibold mt-1">
+            Authentic party trays
+          </h2>
+          <p className="mt-4 text-cocoa/75">
+            Handcrafted Filipino favorites and premium dishes, made fresh for
+            your gatherings, parties, and special occasions.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <a
-              href={`mailto:${business.email}?subject=${encodeURIComponent("Catering inquiry")}`}
-              className="inline-flex items-center rounded-full bg-coffee px-6 py-3.5 text-base font-semibold text-cream hover:bg-coffee-dark transition-colors"
-            >
-              Email us about your event
-            </a>
-            <Link
-              href="/contact"
-              className="inline-flex items-center rounded-full border-2 border-cocoa/15 px-6 py-3.5 text-base font-semibold text-cocoa hover:border-cocoa/30 transition-colors"
-            >
-              Contact details
-            </Link>
+          <Link
+            href="/menu"
+            className="mt-6 inline-flex items-center rounded-full border-2 border-cocoa/15 px-6 py-3.5 text-base font-semibold text-cocoa hover:border-cocoa/30 transition-colors"
+          >
+            See the full menu
+          </Link>
+        </div>
+      </section>
+
+      {/* Request a quote */}
+      <section className="bg-tan">
+        <div className="mx-auto max-w-2xl px-5 sm:px-8 py-16">
+          <div className="text-center mb-8">
+            <h2 className="font-display text-3xl font-semibold">Request a quote</h2>
+            <p className="mt-3 text-cocoa/75">
+              Tell us about your event and we&apos;ll craft the perfect package.
+            </p>
+          </div>
+          <div className="bg-cream rounded-3xl p-7 sm:p-8">
+            <CateringForm />
           </div>
         </div>
       </section>

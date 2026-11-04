@@ -25,6 +25,7 @@ export const navLinks = [
   { href: "/menu", label: "Menu" },
   { href: "/custom-cakes", label: "Custom Cakes" },
   { href: "/catering", label: "Catering" },
+  { href: "/gallery", label: "Gallery" },
   { href: "/about", label: "Our Story" },
   { href: "/contact", label: "Visit & Contact" },
 ] as const;
@@ -64,17 +65,17 @@ export const offerings = [
 
 export const story = [
   {
-    year: "2016",
-    title: "A home kitchen",
-    text: "It started with one oven, birthday orders for neighbors, and a notebook of recipes passed down and tinkered with.",
+    label: "Home kitchen",
+    title: "Where it began",
+    text: "Cakes for family celebrations, made in a home kitchen with recipes already decades old.",
   },
   {
-    year: "2019",
-    title: "A stall, a following",
-    text: "Weekend markets around Victoria turned word-of-mouth into a waitlist, and the notebook turned into a real menu.",
+    label: "Word of mouth",
+    title: "A growing following",
+    text: "Requests from neighbors and friends turned a home kitchen into something bigger.",
   },
   {
-    year: "Today",
+    label: "Today",
     title: "Mom's Cake Café",
     text: "A storefront on Oak Bay Ave where the cakes, the coffee, and the people who ask for both get to stay a while.",
   },
@@ -108,69 +109,442 @@ export const testimonials = [
 export const cakeMenu = [
   {
     category: "Signature Cakes",
-    note: "Priced per 8-inch round, serves 10–12. Larger tiers and custom designs quoted on request.",
+    note: "Larger sizes and custom designs quoted on request.",
     items: [
-      { name: "Classic Vanilla Buttercream", price: "$52" },
-      { name: "Dark Chocolate Ganache", price: "$56" },
-      { name: "Ube & Coconut", price: "$58" },
-      { name: "Lemon Elderflower", price: "$56" },
-      { name: "Salted Caramel Mocha", price: "$60" },
+      {
+        name: "Carrot Cake",
+        description: "Spiced carrot cake with cream cheese frosting, walnuts, and a hint of cinnamon",
+        sizes: [
+          { label: "6×4", price: "$42" },
+          { label: "8\"", price: "$64" },
+        ],
+      },
+      {
+        name: "Classic Ube Cake",
+        description: "Filipino purple yam cake with ube halaya",
+        sizes: [
+          { label: "6×4", price: "$44" },
+          { label: "8\"", price: "$70" },
+        ],
+      },
+      {
+        name: "Ube Cake with Leche Flan",
+        description: "Classic ube cake crowned with silky leche flan topping",
+        sizes: [
+          { label: "6×4", price: "$70" },
+          { label: "8\"", price: "$80" },
+        ],
+      },
+      {
+        name: "Cookies & Cream Oreo Cake",
+        description: "Chocolate sponge layered with Oreo cream filling and crushed cookies",
+        sizes: [
+          { label: "6×4", price: "$44" },
+          { label: "8\"", price: "$64" },
+        ],
+      },
+      {
+        name: "Floral Cake",
+        description: "Elegant floral buttercream design with rich chocolate cake inside",
+        sizes: [
+          { label: "6×4", price: "$53" },
+          { label: "8\"", price: "$65" },
+        ],
+      },
+      {
+        name: "Mango Bravo",
+        description: "Layers of chiffon sponge, cream, and fresh mangoes topped with meringue",
+        sizes: [
+          { label: "6×4", price: "$53" },
+          { label: "6×5", price: "$70" },
+          { label: "8×4", price: "$85" },
+          { label: "8×6", price: "$93" },
+          { label: "10×4", price: "$125" },
+        ],
+      },
+      {
+        name: "Mocha Cake",
+        description: "Coffee-infused sponge with mocha buttercream and caramel swirl",
+        sizes: [
+          { label: "6×4", price: "$42" },
+          { label: "8\"", price: "$64" },
+        ],
+      },
+      {
+        name: "Moist Chocolate Cake",
+        description: "Rich triple-layer chocolate cake with dark ganache and cocoa dusting",
+        sizes: [
+          { label: "6×4", price: "$44" },
+          { label: "8\"", price: "$58" },
+        ],
+      },
+      {
+        name: "Red Velvet Cake",
+        description: "Red velvet layers with cream cheese frosting and delicate crumb",
+        sizes: [
+          { label: "6×4", price: "$43" },
+          { label: "8\"", price: "$60" },
+        ],
+      },
+      {
+        name: "Vanilla Cake",
+        description: "Light, fluffy vanilla sponge with smooth buttercream frosting",
+        sizes: [
+          { label: "6×4", price: "$42" },
+          { label: "8\"", price: "$62" },
+        ],
+      },
+      {
+        name: "Pistachio Sansrival",
+        description: "Crispy meringue layers with buttercream, coated in crushed pistachios",
+        sizes: [
+          { label: "6×4", price: "$57" },
+          { label: "8\"", price: "$70" },
+        ],
+      },
+      {
+        name: "Almond Sansrival",
+        description: "Crispy meringue layers with buttercream, coated in sliced almonds",
+        sizes: [
+          { label: "6×4", price: "$52" },
+          { label: "8\"", price: "$65" },
+        ],
+      },
+      {
+        name: "Cashew Sansrival",
+        description: "Crispy meringue layers with buttercream, coated in roasted cashews",
+        sizes: [
+          { label: "6×4", price: "$52" },
+          { label: "8\"", price: "$65" },
+        ],
+      },
     ],
   },
   {
     category: "Cupcakes",
     note: "Sold individually or by the half-dozen.",
     items: [
-      { name: "Red Velvet", price: "$4.25" },
-      { name: "Mango Cream", price: "$4.25" },
-      { name: "Biscoff Crunch", price: "$4.75" },
-      { name: "Classic Chocolate", price: "$4.00" },
+      { name: "Red Velvet", sizes: [{ label: "", price: "$4.25" }] },
+      { name: "Mango Cream", sizes: [{ label: "", price: "$4.25" }] },
+      { name: "Biscoff Crunch", sizes: [{ label: "", price: "$4.75" }] },
+      { name: "Classic Chocolate", sizes: [{ label: "", price: "$4.00" }] },
     ],
   },
   {
-    category: "Sansrival",
-    note: "Whole and half sizes available; pre-order recommended.",
-    items: [
-      { name: "Sansrival Slice", price: "$6.50" },
-      { name: "Whole Sansrival (8-inch)", price: "$48" },
-    ],
-  },
-  {
-    category: "Coffee & Drinks",
+    category: "Coffee",
     note: "",
     items: [
-      { name: "Espresso", price: "$3.25" },
-      { name: "Latte", price: "$4.75" },
-      { name: "Vanilla Oat Latte", price: "$5.25" },
-      { name: "Iced Americano", price: "$4.00" },
-      { name: "Hot Chocolate", price: "$4.25" },
+      {
+        name: "Café Latte",
+        description: "Smooth espresso with steamed milk and silky microfoam",
+        sizes: [
+          { label: "Small", price: "$4.65" },
+          { label: "Medium", price: "$5.25" },
+          { label: "Large", price: "$5.45" },
+        ],
+      },
+      {
+        name: "Cappuccino",
+        description: "Classic espresso with equal parts steamed milk and dense foam",
+        sizes: [
+          { label: "Small", price: "$4.65" },
+          { label: "Medium", price: "$5.25" },
+          { label: "Large", price: "$5.45" },
+        ],
+      },
+      {
+        name: "Flat White",
+        description: "Velvety double-shot espresso with microfoam",
+        sizes: [
+          { label: "Small", price: "$4.85" },
+          { label: "Medium", price: "$5.45" },
+          { label: "Large", price: "$5.65" },
+        ],
+      },
+      {
+        name: "Americano",
+        description: "Bold espresso lengthened with hot water",
+        sizes: [
+          { label: "Small", price: "$3.55" },
+          { label: "Medium", price: "$3.95" },
+          { label: "Large", price: "$4.35" },
+        ],
+      },
+      {
+        name: "Mocha",
+        description: "Espresso, chocolate, steamed milk, and whipped cream",
+        sizes: [
+          { label: "Small", price: "$5" },
+          { label: "Medium", price: "$5.65" },
+          { label: "Large", price: "$6.15" },
+        ],
+      },
+    ],
+  },
+  {
+    category: "Non-Coffee Hot Beverages",
+    note: "",
+    items: [
+      {
+        name: "Hot Matcha Latte",
+        description: "Ceremonial-grade matcha with creamy steamed milk",
+        sizes: [
+          { label: "Small", price: "$5.25" },
+          { label: "Medium", price: "$5.65" },
+          { label: "Large", price: "$6.05" },
+        ],
+      },
+      {
+        name: "Hot Chocolate",
+        description: "Rich Belgian chocolate with steamed milk and marshmallows",
+        sizes: [
+          { label: "Small", price: "$4.25" },
+          { label: "Medium", price: "$4.85" },
+          { label: "Large", price: "$5.05" },
+        ],
+      },
+      {
+        name: "Hot Teas",
+        description: "House-brewed selection of premium loose-leaf teas",
+        sizes: [{ label: "", price: "$3.65" }],
+      },
+      {
+        name: "London Fog",
+        description: "Earl Grey tea with steamed milk and vanilla",
+        sizes: [
+          { label: "Small", price: "$4.75" },
+          { label: "Medium", price: "$5.15" },
+          { label: "Large", price: "$5.55" },
+        ],
+      },
+    ],
+  },
+  {
+    category: "Shaved Ice Desserts",
+    note: "",
+    items: [
+      {
+        name: "Halo-Halo",
+        description: "Classic Filipino shaved-ice dessert with sweet beans, fruits, ube, and leche flan",
+        sizes: [{ label: "", price: "$14" }],
+      },
+      {
+        name: "Mais Con-Yelo",
+        description: "Sweet corn and shaved ice with milk and a scoop of ice cream",
+        sizes: [{ label: "", price: "$12" }],
+      },
+    ],
+  },
+  {
+    category: "Smoothies",
+    note: "",
+    items: [
+      {
+        name: "Mango Smoothie",
+        description: "Fresh ripe mangoes blended with creamy milk and ice",
+        sizes: [
+          { label: "Regular", price: "$6.95" },
+          { label: "Large", price: "$7.45" },
+        ],
+      },
+      {
+        name: "Strawberry Smoothie",
+        description: "Sweet strawberries blended with yogurt and ice",
+        sizes: [
+          { label: "Regular", price: "$6.95" },
+          { label: "Large", price: "$7.45" },
+        ],
+      },
+      {
+        name: "Lime Smoothie",
+        description: "Refreshing lime blended with ice and a hint of mint",
+        sizes: [
+          { label: "Regular", price: "$6.95" },
+          { label: "Large", price: "$7.45" },
+        ],
+      },
+    ],
+  },
+  {
+    category: "Mojitos",
+    note: "",
+    items: [
+      {
+        name: "Strawberry Mojito",
+        description: "Fresh muddled strawberries with mint, lime, and soda over crushed ice",
+        sizes: [
+          { label: "Regular", price: "$5.25" },
+          { label: "Large", price: "$5.99" },
+        ],
+      },
+      {
+        name: "Mango Mojito",
+        description: "Sweet ripe mango with mint, lime, and soda over crushed ice",
+        sizes: [
+          { label: "Regular", price: "$5.25" },
+          { label: "Large", price: "$5.99" },
+        ],
+      },
+      {
+        name: "Lime Mojito",
+        description: "Classic lime and mint mojito with sparkling soda over crushed ice",
+        sizes: [
+          { label: "Regular", price: "$5.25" },
+          { label: "Large", price: "$5.99" },
+        ],
+      },
+    ],
+  },
+  {
+    category: "Chillers",
+    note: "",
+    items: [
+      {
+        name: "Coffee Chiller",
+        description: "Chilled blended coffee with ice and a creamy finish",
+        sizes: [
+          { label: "Regular", price: "$5.35" },
+          { label: "Large", price: "$5.75" },
+        ],
+      },
+      {
+        name: "Mocha Chiller",
+        description: "Blended iced mocha with chocolate and whipped cream",
+        sizes: [
+          { label: "Regular", price: "$6.95" },
+          { label: "Large", price: "$7.35" },
+        ],
+      },
+      {
+        name: "Espresso Chiller",
+        description: "Bold double-shot espresso blended over ice",
+        sizes: [
+          { label: "Regular", price: "$6.35" },
+          { label: "Large", price: "$6.75" },
+        ],
+      },
+      {
+        name: "Vanilla Chiller",
+        description: "Creamy vanilla blended ice drink with a smooth finish",
+        sizes: [
+          { label: "Regular", price: "$5.35" },
+          { label: "Large", price: "$5.75" },
+        ],
+      },
+      {
+        name: "Matcha Chiller",
+        description: "Iced blended matcha with milk and crushed ice",
+        sizes: [
+          { label: "Regular", price: "$6.35" },
+          { label: "Large", price: "$6.75" },
+        ],
+      },
+    ],
+  },
+  {
+    category: "Cold Coffee",
+    note: "",
+    items: [
+      {
+        name: "Iced Coffee",
+        description: "Chilled house-brewed coffee served over ice",
+        sizes: [{ label: "", price: "$4.35" }],
+      },
+      {
+        name: "Iced Americano",
+        description: "Bold espresso shots poured over cold water and ice",
+        sizes: [{ label: "", price: "$4.55" }],
+      },
+      {
+        name: "Iced Latte",
+        description: "Espresso and cold milk over ice with silky foam",
+        sizes: [{ label: "", price: "$5.50" }],
+      },
+      {
+        name: "Iced Mocha",
+        description: "Espresso, chocolate, and cold milk over ice",
+        sizes: [{ label: "", price: "$5.75" }],
+      },
+      {
+        name: "Iced Chai Latte",
+        description: "Spiced chai and cold milk served over ice",
+        sizes: [{ label: "", price: "$5.75" }],
+      },
+      {
+        name: "Iced Chocolate",
+        description: "Rich Belgian chocolate blended with cold milk and ice",
+        sizes: [{ label: "", price: "$5.75" }],
+      },
+      {
+        name: "Iced Matcha",
+        description: "Ceremonial matcha whisked with cold milk over ice",
+        sizes: [{ label: "", price: "$5.75" }],
+      },
+      {
+        name: "Iced Vanilla Latte",
+        description: "Vanilla espresso with cold milk over ice",
+        sizes: [{ label: "", price: "$5.75" }],
+      },
+      {
+        name: "Iced Caramel Macchiato",
+        description: "Espresso, vanilla, caramel, and cold milk over ice",
+        sizes: [{ label: "", price: "$5.75" }],
+      },
     ],
   },
   {
     category: "Homemade Meals",
-    note: "A short rotating menu — ask what's on today.",
+    note: "A short rotating menu. Ask what's on today.",
     items: [
-      { name: "Soup & Half Sandwich", price: "$11" },
-      { name: "Chicken Adobo Plate", price: "$14" },
-      { name: "Seasonal Quiche & Salad", price: "$13" },
+      { name: "Soup & Half Sandwich", sizes: [{ label: "", price: "$11" }] },
+      { name: "Chicken Adobo Plate", sizes: [{ label: "", price: "$14" }] },
+      { name: "Seasonal Quiche & Salad", sizes: [{ label: "", price: "$13" }] },
     ],
   },
 ] as const;
 
+// Named spots on the site an admin can replace with a real photo via /admin.
+// Add more entries here as new photo placements get built — the admin page
+// and photo-serving route both just iterate this list, no other wiring needed.
+export const photoSlots = [
+  { key: "hero", label: "Home page hero background" },
+] as const;
+
 export const cateringPackages = [
   {
-    name: "Dessert Table",
-    serves: "Serves 20–30",
-    text: "A mixed spread of mini cupcakes, sansrival bites, and a small centerpiece cake, styled for the table.",
+    name: "Custom Cake Packages",
+    text: "Tiered cakes, cupcake towers, and dessert tables.",
   },
   {
-    name: "Event Cake",
-    serves: "Serves 30–80",
-    text: "One tiered cake sized to your guest count, in any flavor from our menu or a custom combination.",
+    name: "Full Meal Catering",
+    text: "Pasta, rice meals, sandwiches, and more.",
   },
   {
-    name: "Coffee Service",
-    serves: "Up to 4 hours",
-    text: "An espresso station with a barista on site, for showers, launches, or office afternoons.",
+    name: "Coffee & Beverage Bar",
+    text: "Barista service with premium coffee selections.",
   },
+  {
+    name: "Dessert Buffets",
+    text: "Pastries, cheesecakes, and sweet treats.",
+  },
+] as const;
+
+// Categories an admin can file gallery photos under, also the section
+// order on the public gallery page.
+export const galleryCategories = [
+  "Birthday Cakes",
+  "Wedding Cakes",
+  "Custom Cakes",
+  "Cupcakes & Treats",
+  "Events & Catering",
+] as const;
+
+export const eventTypes = [
+  "Birthday",
+  "Wedding",
+  "Corporate",
+  "Meeting",
+  "Anniversary",
+  "Graduation",
+  "Other",
 ] as const;

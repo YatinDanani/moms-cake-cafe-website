@@ -1,46 +1,58 @@
 import type { Metadata } from "next";
-import { story, values } from "@/lib/content";
+import Image from "next/image";
+import { values } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Our Story — Mom's Cake Café",
+  title: "Our Story | Mom's Cake Café",
   description: "How Mom's Cake Café grew from a home kitchen into a storefront on Oak Bay Ave.",
 };
 
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-cream">
-        <div className="mx-auto max-w-3xl px-5 sm:px-8 pt-16 pb-14">
-          <h1 className="font-display text-4xl sm:text-5xl font-semibold">Our story</h1>
-          <p className="mt-5 text-lg text-cocoa/75">
-            Mom&apos;s Cake Café didn&apos;t start as a business plan. It
-            started as birthday cakes for neighbors, made in a home kitchen
-            with recipes that were already decades old. What changed over the
-            years was never the recipes — it was how many people got to eat
-            them.
-          </p>
-        </div>
-      </section>
-
-      <section className="bg-tan">
-        <div className="mx-auto max-w-4xl px-5 sm:px-8 py-16">
-          <ol className="space-y-8">
-            {story.map((s, i) => (
-              <li key={s.year} className="flex gap-6 items-start">
-                <div
-                  className="shrink-0 rounded-3xl bg-caramel flex flex-col items-center justify-center font-display font-semibold text-cocoa text-center leading-none"
-                  style={{ width: `${88 + i * 22}px`, height: `${88 + i * 22}px` }}
-                >
-                  <span className="text-sm opacity-70">tier {i + 1}</span>
-                  <span className="text-lg mt-1">{s.year}</span>
-                </div>
-                <div className="pt-2">
-                  <p className="font-display text-xl font-semibold">{s.title}</p>
-                  <p className="mt-2 text-cocoa/75 max-w-md">{s.text}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+      <section className="bg-cocoa text-cream">
+        <div className="mx-auto max-w-5xl px-5 sm:px-8 pt-16 pb-16 grid lg:grid-cols-2 gap-10 lg:items-start">
+          <div>
+            <p className="font-script text-2xl text-latte">Our story</p>
+            <h1 className="font-display text-3xl sm:text-4xl font-semibold mt-1">
+              A legacy baked{" "}
+              <span className="font-script font-normal text-latte">with love</span>
+            </h1>
+            <div className="mt-8 space-y-5 text-cream/85 text-lg leading-relaxed">
+              <p>
+                It all began in a humble family kitchen, where the aroma of
+                freshly baked cakes filled the air every weekend. Our founder,
+                a mother with a passion for baking, started creating cakes for
+                family celebrations, each one a labor of love, perfected
+                through years of tradition and heart.
+              </p>
+              <p>
+                What started as a small home-based baking business, driven by
+                requests from neighbors and friends, soon blossomed into
+                something much bigger. The dream was simple: to create a warm,
+                welcoming space where families and friends could gather,
+                celebrate, and create memories over handcrafted cakes and
+                exceptional coffee.
+              </p>
+              <p>
+                Today, Mom&apos;s Cake Café stands as a testament to that
+                dream: a place where the values of quality, hospitality, and
+                family remain at the heart of everything we do. Every recipe
+                carries the warmth of home, and every guest is treated like
+                part of the family.
+              </p>
+            </div>
+          </div>
+          <div className="relative aspect-[3/4] rounded-3xl overflow-hidden">
+            <Image
+              src="/founders.jpg"
+              alt="The founders of Mom's Cake Café"
+              fill
+              priority
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </div>
         </div>
       </section>
 
@@ -49,7 +61,7 @@ export default function AboutPage() {
           <div>
             <h2 className="font-display text-2xl font-semibold">What we&apos;re after</h2>
             <p className="mt-3 text-cocoa/75">
-              A café people come back to — not just for cake, but for the
+              A café people come back to. Not just for cake, but for the
               table they sat at while they ate it. Quality first, hospitality
               always.
             </p>

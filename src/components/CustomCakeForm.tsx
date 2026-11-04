@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
-import { business } from "@/lib/content";
+import { submitNetlifyForm } from "@/lib/netlifyForms";
 import { UploadIcon, CloseIcon } from "./Icons";
 
 const fieldClass =
   "w-full rounded-xl border border-cocoa/15 bg-white px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-coffee";
 const labelClass = "block text-sm font-semibold mb-1.5";
-const MIN_LEAD_DAYS = 3;
+const MIN_LEAD_DAYS = 2;
+type Status = "idle" | "sending" | "sent" | "error";
 
 function formatLocalDate(d: Date) {
   const y = d.getFullYear();
@@ -17,7 +18,7 @@ function formatLocalDate(d: Date) {
 }
 
 export function CustomCakeForm() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
   const [dateError, setDateError] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const dateInputRef = useRef<HTMLInputElement>(null);
@@ -48,12 +49,12 @@ export function CustomCakeForm() {
     setFiles((prev) => prev.filter((_, i) => i !== index));
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const get = (key: string) => String(form.get(key) ?? "").trim();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-    const date = get("date");
+    const date = String(formData.get("date") ?? "");
     const minDate = minDateRef.current;
     if (date && minDate && date < minDate) {
       setDateError(`Please choose a date at least ${MIN_LEAD_DAYS} days out.`);
@@ -61,31 +62,39 @@ export function CustomCakeForm() {
     }
     setDateError("");
 
-    const lines = [
-      `Name: ${get("name")}`,
-      `Email: ${get("email")}`,
-      `Phone: ${get("phone")}`,
-      `Occasion: ${get("occasion")}`,
-      `Date needed: ${date}`,
-      `Servings: ${get("servings")}`,
-      `Flavor ideas: ${get("flavor")}`,
-      `Budget (optional): ${get("budget")}`,
-      `Reference photos: ${
-        files.length ? `${files.length} selected — please attach before sending (see note below)` : "none"
-      }`,
-      "",
-      "Design notes:",
-      get("notes"),
-    ];
+    // The hidden file input is cleared after every pick (so the same file
+    // can be re-selected), so its native value is stale at submit time —
+    // drop it and attach the real selection from `files` state instead.
+    formData.delete("photos");
+    files.forEach((file) => formData.append("photos", file));
 
-    window.location.href = `mailto:${business.email}?subject=${encodeURIComponent(
-      `Custom cake order — ${get("occasion") || "new request"}`
-    )}&body=${encodeURIComponent(lines.join("\n"))}`;
-    setSent(true);
+    setStatus("sending");
+    try {
+      await submitNetlifyForm(formData);
+      setStatus("sent");
+      form.reset();
+      setFiles([]);
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form
+      name="custom-cake-order"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      encType="multipart/form-data"
+      onSubmit={handleSubmit}
+      className="space-y-6"
+    >
+      <input type="hidden" name="form-name" value="custom-cake-order" />
+      <p className="hidden">
+        <label>
+          Don&apos;t fill this out: <input name="bot-field" />
+        </label>
+      </p>
+
       <div className="grid sm:grid-cols-2 gap-5">
         <div>
           <label htmlFor="name" className={labelClass}>Name</label>
@@ -163,7 +172,7 @@ export function CustomCakeForm() {
           className={fieldClass}
         />
         <p className="mt-1.5 text-xs text-cocoa/60">
-          This helps us suggest options — we confirm final pricing after reviewing your design.
+          This helps us suggest options. We confirm final pricing after reviewing your design.
         </p>
       </div>
 
@@ -185,6 +194,7 @@ export function CustomCakeForm() {
         <input
           ref={fileInputRef}
           type="file"
+          name="photos"
           accept="image/*"
           multiple
           className="hidden"
@@ -224,15 +234,19 @@ export function CustomCakeForm() {
 
       <button
         type="submit"
-        className="inline-flex items-center rounded-full bg-coffee px-6 py-3 text-base font-semibold text-cream hover:bg-coffee-dark transition-colors"
+        disabled={status === "sending"}
+        className="inline-flex items-center rounded-full bg-coffee px-6 py-3 text-base font-semibold text-cream hover:bg-coffee-dark transition-colors disabled:opacity-60"
       >
-        Send order request
+        {status === "sending" ? "Sending…" : "Send order request"}
       </button>
-      {sent && (
+      {status === "sent" && (
         <p className="text-sm text-coffee font-medium">
-          Opening your email app with this order filled in
-          {files.length > 0 && " — attach your selected photo(s) to that email before sending, mailto links can't carry them automatically"}
-          . We&apos;ll follow up to confirm details and pricing.
+          Order request sent. We&apos;ll follow up to confirm details and pricing.
+        </p>
+      )}
+      {status === "error" && (
+        <p className="text-sm text-coffee font-medium">
+          Something went wrong sending that. Try again, or email us directly.
         </p>
       )}
     </form>

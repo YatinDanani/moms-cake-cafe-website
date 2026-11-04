@@ -4,7 +4,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { PinIcon, PhoneIcon, MailIcon, ClockIcon } from "@/components/Icons";
 
 export const metadata: Metadata = {
-  title: "Visit & Contact — Mom's Cake Café",
+  title: "Visit & Contact | Mom's Cake Café",
   description: "Address, hours, and contact details for Mom's Cake Café on Oak Bay Ave, Victoria.",
 };
 

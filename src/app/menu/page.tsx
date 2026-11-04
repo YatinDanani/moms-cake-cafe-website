@@ -1,22 +1,24 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { cakeMenu } from "@/lib/content";
+import { getMenu } from "@/lib/siteOverrides";
 
 export const metadata: Metadata = {
-  title: "Menu — Mom's Cake Café",
+  title: "Menu | Mom's Cake Café",
   description: "Signature cakes, cupcakes, sansrival, coffee, and homemade meals at Mom's Cake Café.",
 };
 
 const bandColors = ["bg-coffee", "bg-caramel", "bg-mocha", "bg-latte", "bg-coffee"];
 
-export default function MenuPage() {
+export default async function MenuPage() {
+  const cakeMenu = await getMenu();
   return (
     <>
       <section className="bg-cream">
         <div className="mx-auto max-w-4xl px-5 sm:px-8 pt-16 pb-10 text-center">
           <h1 className="font-display text-4xl sm:text-5xl font-semibold">The menu</h1>
           <p className="mt-4 text-cocoa/75">
-            Everything below is baked in-house. Prices are a guide — call or
+            Everything below is baked in-house. Prices are a guide. Call or
             email to confirm availability for the day you need.
           </p>
         </div>
@@ -34,9 +36,34 @@ export default function MenuPage() {
             )}
             <ul className="mt-5 divide-y divide-cocoa/10 border-t border-b border-cocoa/10">
               {section.items.map((item) => (
-                <li key={item.name} className="flex items-baseline justify-between py-3.5 gap-4">
-                  <span className="font-medium">{item.name}</span>
-                  <span className="text-cocoa/60 whitespace-nowrap">{item.price}</span>
+                <li key={item.name} className="flex items-start justify-between py-3.5 gap-4">
+                  <div className="flex items-start gap-3">
+                    {item.photo && (
+                      <div className="relative h-14 w-14 shrink-0 rounded-xl overflow-hidden">
+                        <Image
+                          src={`/api/photos/${item.photo}`}
+                          alt=""
+                          fill
+                          sizes="56px"
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+                    <div>
+                      <p className="font-medium">{item.name}</p>
+                      {item.description && (
+                        <p className="mt-0.5 text-sm text-cocoa/60 max-w-sm">{item.description}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="text-right shrink-0">
+                    {item.sizes.map((size) => (
+                      <p key={size.label} className="text-cocoa/70 whitespace-nowrap text-sm">
+                        {size.price}
+                        {size.label && <span className="text-cocoa/45"> · {size.label}</span>}
+                      </p>
+                    ))}
+                  </div>
                 </li>
               ))}
             </ul>
@@ -50,7 +77,7 @@ export default function MenuPage() {
           <p className="mt-3 text-cocoa/75">
             Wedding tiers, themed birthday cakes, and flavor combinations
             outside the menu are what the custom order form is for. These
-            prices are for the standard menu — custom designs are quoted
+            prices are for the standard menu. Custom designs are quoted
             once we&apos;ve seen what you have in mind.
           </p>
           <Link

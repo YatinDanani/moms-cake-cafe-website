@@ -1,28 +1,40 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { business } from "@/lib/content";
+import { submitNetlifyForm } from "@/lib/netlifyForms";
+
+type Status = "idle" | "sending" | "sent" | "error";
 
 export function ContactForm() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const name = String(form.get("name") ?? "");
-    const email = String(form.get("email") ?? "");
-    const message = String(form.get("message") ?? "");
-
-    const subject = `Message from ${name || "the website"}`;
-    const body = `${message}\n\nFrom: ${name}\nReply to: ${email}`;
-    window.location.href = `mailto:${business.email}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    setStatus("sending");
+    try {
+      await submitNetlifyForm(new FormData(e.currentTarget));
+      setStatus("sent");
+      e.currentTarget.reset();
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form
+      name="contact"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      onSubmit={handleSubmit}
+      className="space-y-5"
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p className="hidden">
+        <label>
+          Don&apos;t fill this out: <input name="bot-field" />
+        </label>
+      </p>
+
       <div className="grid sm:grid-cols-2 gap-5">
         <div>
           <label htmlFor="name" className="block text-sm font-semibold mb-1.5">
@@ -63,13 +75,19 @@ export function ContactForm() {
       </div>
       <button
         type="submit"
-        className="inline-flex items-center rounded-full bg-coffee px-6 py-3 text-base font-semibold text-cream hover:bg-coffee-dark transition-colors"
+        disabled={status === "sending"}
+        className="inline-flex items-center rounded-full bg-coffee px-6 py-3 text-base font-semibold text-cream hover:bg-coffee-dark transition-colors disabled:opacity-60"
       >
-        Send message
+        {status === "sending" ? "Sending…" : "Send message"}
       </button>
-      {sent && (
+      {status === "sent" && (
         <p className="text-sm text-coffee font-medium">
-          Opening your email app with this message filled in — send it from there to reach us.
+          Message sent. We&apos;ll get back to you soon.
+        </p>
+      )}
+      {status === "error" && (
+        <p className="text-sm text-coffee font-medium">
+          Something went wrong sending that. Try again, or email us directly.
         </p>
       )}
     </form>

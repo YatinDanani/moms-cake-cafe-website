@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { business, navLinks } from "@/lib/content";
+import { getDeliveryLinks } from "@/lib/siteOverrides";
 import { InstagramIcon, FacebookIcon, TikTokIcon, PinIcon, PhoneIcon, MailIcon } from "./Icons";
 
-export function Footer() {
+export async function Footer() {
+  const delivery = await getDeliveryLinks();
   return (
     <footer className="bg-cocoa text-cream">
       <div className="mx-auto max-w-6xl px-5 sm:px-8 py-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -15,7 +17,7 @@ export function Footer() {
             </p>
           </div>
           <p className="mt-3 text-sm text-cream/70 max-w-xs">
-            {business.tagline} — custom cakes, coffee, and homemade meals on Oak Bay Ave.
+            {business.tagline}. Custom cakes, coffee, and homemade meals on Oak Bay Ave.
           </p>
           <div className="mt-5 flex items-center gap-4">
             <a href={business.social.instagram} aria-label="Instagram" className="text-cream/70 hover:text-caramel">
@@ -28,6 +30,30 @@ export function Footer() {
               <TikTokIcon className="h-5 w-5" />
             </a>
           </div>
+          {(delivery.doordash || delivery.ubereats) && (
+            <div className="mt-5 flex flex-wrap items-center gap-2.5">
+              {delivery.doordash && (
+                <a
+                  href={delivery.doordash}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center rounded-full border border-cream/20 px-3.5 py-1.5 text-xs font-semibold text-cream/85 hover:border-caramel hover:text-caramel transition-colors"
+                >
+                  Order on DoorDash
+                </a>
+              )}
+              {delivery.ubereats && (
+                <a
+                  href={delivery.ubereats}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center rounded-full border border-cream/20 px-3.5 py-1.5 text-xs font-semibold text-cream/85 hover:border-caramel hover:text-caramel transition-colors"
+                >
+                  Order on Uber Eats
+                </a>
+              )}
+            </div>
+          )}
         </div>
 
         <div>
