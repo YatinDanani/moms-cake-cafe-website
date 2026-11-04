@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <!--
+      Static mirror of every Netlify Form on the site, so Netlify's
+      build-time form scanner can detect and register them. Next.js pages
+      are rendered dynamically, so the real React forms aren't visible to
+      that scanner — submissions are posted here at runtime instead.
+      See https://opennext.js.org/netlify/forms
+    -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input name="bot-field" />
+      <input name="name" type="text" />
+      <input name="email" type="email" />
+      <textarea name="message"></textarea>
+    </form>
+
+    <form
+      name="custom-cake-order"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      enctype="multipart/form-data"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="custom-cake-order" />
+      <input name="bot-field" />
+      <input name="name" type="text" />
+      <input name="email" type="email" />
+      <input name="phone" type="tel" />
+      <input name="date" type="date" />
+      <input name="occasion" type="text" />
+      <input name="servings" type="text" />
+      <input name="flavor" type="text" />
+      <input name="budget" type="text" />
+      <textarea name="notes"></textarea>
+      <input name="photos" type="file" multiple />
+    </form>
+
+    <form name="catering-inquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="catering-inquiry" />
+      <input name="bot-field" />
+      <input name="eventType" type="text" />
+      <input name="name" type="text" />
+      <input name="email" type="email" />
+      <input name="phone" type="tel" />
+      <input name="eventDate" type="date" />
+      <input name="guestCount" type="number" />
+      <input name="venue" type="text" />
+      <input name="budget" type="text" />
+      <textarea name="details"></textarea>
+    </form>
+  </body>
+</html>
