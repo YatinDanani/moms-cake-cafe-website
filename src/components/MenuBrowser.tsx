@@ -45,7 +45,6 @@ export function MenuBrowser({ menu }: { menu: Menu }) {
             }`}
           >
             {section.category}
-            <span className="ml-1.5 opacity-70">{section.items.length}</span>
           </button>
         ))}
       </div>
