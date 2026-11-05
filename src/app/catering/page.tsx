@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { cateringPackages } from "@/lib/content";
 import { CateringForm } from "@/components/CateringForm";
 
@@ -48,26 +47,6 @@ export default function CateringPage() {
               </div>
             );
           })}
-        </div>
-      </section>
-
-      {/* Catering menu teaser */}
-      <section className="bg-cream text-center">
-        <div className="mx-auto max-w-xl px-5 sm:px-8 py-16">
-          <p className="font-script text-2xl text-coffee">Catering menu</p>
-          <h2 className="font-display text-3xl sm:text-4xl font-semibold mt-1">
-            Authentic party trays
-          </h2>
-          <p className="mt-4 text-cocoa/75">
-            Handcrafted Filipino favorites and premium dishes, made fresh for
-            your gatherings, parties, and special occasions.
-          </p>
-          <Link
-            href="/menu"
-            className="mt-6 inline-flex items-center rounded-full border-2 border-cocoa/15 px-6 py-3.5 text-base font-semibold text-cocoa hover:border-cocoa/30 transition-colors"
-          >
-            See the full menu
-          </Link>
         </div>
       </section>
 
