@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { getMenu } from "@/lib/siteOverrides";
+import { MenuBrowser } from "@/components/MenuBrowser";
 
 export const metadata: Metadata = {
   title: "Menu | Mom's Cake Café",
   description: "Signature cakes, cupcakes, sansrival, coffee, and homemade meals at Mom's Cake Café.",
 };
-
-const bandColors = ["bg-coffee", "bg-caramel", "bg-mocha", "bg-latte", "bg-coffee"];
 
 export default async function MenuPage() {
   const cakeMenu = await getMenu();
@@ -24,51 +22,8 @@ export default async function MenuPage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-4xl px-5 sm:px-8 pb-20 space-y-14">
-        {cakeMenu.map((section, i) => (
-          <section key={section.category}>
-            <div className="flex items-center gap-3">
-              <span className={`h-2.5 w-2.5 rounded-full ${bandColors[i % bandColors.length]}`} />
-              <h2 className="font-display text-2xl font-semibold">{section.category}</h2>
-            </div>
-            {section.note && (
-              <p className="mt-2 text-sm text-cocoa/60 max-w-md">{section.note}</p>
-            )}
-            <ul className="mt-5 divide-y divide-cocoa/10 border-t border-b border-cocoa/10">
-              {section.items.map((item) => (
-                <li key={item.name} className="flex items-start justify-between py-3.5 gap-4">
-                  <div className="flex items-start gap-3">
-                    {item.photo && (
-                      <div className="relative h-14 w-14 shrink-0 rounded-xl overflow-hidden">
-                        <Image
-                          src={`/api/photos/${item.photo}`}
-                          alt=""
-                          fill
-                          sizes="56px"
-                          className="object-cover"
-                        />
-                      </div>
-                    )}
-                    <div>
-                      <p className="font-medium">{item.name}</p>
-                      {item.description && (
-                        <p className="mt-0.5 text-sm text-cocoa/60 max-w-sm">{item.description}</p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="text-right shrink-0">
-                    {item.sizes.map((size) => (
-                      <p key={size.label} className="text-cocoa/70 whitespace-nowrap text-sm">
-                        {size.price}
-                        {size.label && <span className="text-cocoa/45"> · {size.label}</span>}
-                      </p>
-                    ))}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
+      <div className="mx-auto max-w-5xl px-5 sm:px-8 pb-20">
+        <MenuBrowser menu={cakeMenu} />
       </div>
 
       <section className="bg-tan text-center">
