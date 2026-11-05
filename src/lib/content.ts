@@ -88,21 +88,22 @@ export const values = [
   { name: "Consistency", text: "The cake you loved last year tastes the same this year." },
 ] as const;
 
+// Real reviews from Mom's Cake Café's Google Business profile.
 export const testimonials = [
   {
     quote:
-      "Our wedding cake looked like something from a magazine and tasted even better. They walked us through every flavor before we committed.",
-    name: "Priya M.",
+      "I absolutely loved the custom cake. It looked exactly as requested, with beautiful details. The cake was soft, moist and full of flavor. I would definitely order from them again! Thank you Mom's Cake Cafe!",
+    name: "Therese Chavez",
   },
   {
     quote:
-      "I ordered a last-minute birthday cake on a Tuesday and it was ready Thursday morning, exactly as pictured. Victoria needed this place.",
-    name: "Daniel R.",
+      "I ordered gender reveal cake it was so delicious, the design is great, Sir Victor is so generous and polite, next time I will try the other flavor of their cakes, highly recommended for all occasions!!! Legit 100% thank you for the complimentary Sansrival, my favorite pistachio is the best but all are yummy!!!!",
+    name: "Mecel Villanueva",
   },
   {
     quote:
-      "The sansrival is the reason I keep coming back, but the coffee and the window seat are why I stay for an hour.",
-    name: "Grace L.",
+      "WOW! I found the best Sans Rival I have ever had. Sans Rival is a traditional Filipino layered cake made with crispy cashew meringue, rich French buttercream, and chopped toasted cashews. I tried the Pistachio Sans Rival, and I was immediately blown away by the flavours and textures. The size of their sans rivals are significantly larger than all the sans rivals I've ever tried. The service was warm, friendly, and enthusiastic.",
+    name: "Rhox",
   },
 ] as const;
 
