@@ -5,7 +5,8 @@ import { MenuBrowser } from "@/components/MenuBrowser";
 
 export const metadata: Metadata = {
   title: "Menu | Mom's Cake Café",
-  description: "Signature cakes, cupcakes, sansrival, coffee, and homemade meals at Mom's Cake Café.",
+  description:
+    "Signature cakes, cupcakes, pastries, coffee, breakfast, and Mom's Meal sandwiches at Mom's Cake Café.",
 };
 
 export default async function MenuPage() {

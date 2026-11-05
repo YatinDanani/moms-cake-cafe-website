@@ -57,8 +57,8 @@ export const offerings = [
   },
   {
     key: "meals",
-    name: "Homemade Meals",
-    blurb: "A short daily menu of real food, cooked the way home is.",
+    name: "Mom's Meal",
+    blurb: "Sandwiches and soup, alacarte or as a full plate.",
     color: "coffee",
   },
 ] as const;
@@ -223,12 +223,97 @@ export const cakeMenu = [
   },
   {
     category: "Cupcakes",
-    note: "Sold individually or by the half-dozen.",
+    note: "Also sold as an assorted box.",
     items: [
-      { name: "Red Velvet", sizes: [{ label: "", price: "$4.25" }] },
-      { name: "Mango Cream", sizes: [{ label: "", price: "$4.25" }] },
-      { name: "Biscoff Crunch", sizes: [{ label: "", price: "$4.75" }] },
-      { name: "Classic Chocolate", sizes: [{ label: "", price: "$4.00" }] },
+      { name: "Sunflower Cupcake", sizes: [{ label: "", price: "$5.25" }] },
+      { name: "Vanilla Cupcake", sizes: [{ label: "", price: "$4.49" }] },
+      { name: "Vanilla Sprinkle Cupcake", sizes: [{ label: "", price: "$4.49" }] },
+      { name: "Mocha Cupcake", sizes: [{ label: "", price: "$4.80" }] },
+      { name: "Floral Cupcake", sizes: [{ label: "", price: "$5.25" }] },
+      { name: "Oreo Cupcake", sizes: [{ label: "", price: "$4.49" }] },
+      {
+        name: "Assorted Cupcakes",
+        sizes: [
+          { label: "4 pcs", price: "$18.00" },
+          { label: "6 pcs", price: "$26.00" },
+        ],
+      },
+    ],
+  },
+  {
+    category: "Pastries",
+    note: "",
+    items: [
+      { name: "Apple Turnover", sizes: [{ label: "", price: "$2.95" }] },
+      { name: "Croissant", sizes: [{ label: "", price: "$2.45" }] },
+      { name: "Chocolate Croissant", sizes: [{ label: "", price: "$2.95" }] },
+      { name: "Caramel Almond Croissant", sizes: [{ label: "", price: "$3.50" }] },
+      { name: "Blueberry Muffin", sizes: [{ label: "", price: "$2.55" }] },
+    ],
+  },
+  {
+    category: "Breakfast",
+    note: "Served on a croissant or an English muffin.",
+    items: [
+      {
+        name: "Ham & Cheese",
+        sizes: [
+          { label: "Croissant", price: "$7.50" },
+          { label: "English Muffin", price: "$7.50" },
+        ],
+      },
+      {
+        name: "Ham & Egg",
+        sizes: [
+          { label: "Croissant", price: "$7.99" },
+          { label: "English Muffin", price: "$7.99" },
+        ],
+      },
+      {
+        name: "Turkey & Cheese",
+        sizes: [
+          { label: "Croissant", price: "$7.69" },
+          { label: "English Muffin", price: "$7.69" },
+        ],
+      },
+      {
+        name: "Turkey & Egg",
+        sizes: [
+          { label: "Croissant", price: "$7.99" },
+          { label: "English Muffin", price: "$7.99" },
+        ],
+      },
+      {
+        name: "BLT",
+        sizes: [
+          { label: "Croissant", price: "$8.59" },
+          { label: "English Muffin", price: "$8.59" },
+        ],
+      },
+      {
+        name: "Egg & Cheese",
+        sizes: [
+          { label: "Croissant", price: "$7.50" },
+          { label: "English Muffin", price: "$7.50" },
+        ],
+      },
+      {
+        name: "Egg & Sausage",
+        sizes: [
+          { label: "Croissant", price: "$7.99" },
+          { label: "English Muffin", price: "$7.99" },
+        ],
+      },
+      {
+        name: "Egg & Bacon",
+        sizes: [
+          { label: "Croissant", price: "$7.99" },
+          { label: "English Muffin", price: "$7.99" },
+        ],
+      },
+      { name: "Bagel with Butter", sizes: [{ label: "", price: "$3.95" }] },
+      { name: "Bagel with Cream Cheese", sizes: [{ label: "", price: "$4.99" }] },
+      { name: "Bagel Belt", sizes: [{ label: "", price: "$8.59" }] },
     ],
   },
   {
@@ -421,7 +506,7 @@ export const cakeMenu = [
         description: "Bold double-shot espresso blended over ice",
         sizes: [
           { label: "Regular", price: "$6.35" },
-          { label: "Large", price: "$6.75" },
+          { label: "Large", price: "$7.35" },
         ],
       },
       {
@@ -449,27 +534,42 @@ export const cakeMenu = [
       {
         name: "Iced Coffee",
         description: "Chilled house-brewed coffee served over ice",
-        sizes: [{ label: "", price: "$4.35" }],
+        sizes: [
+          { label: "Regular", price: "$4.35" },
+          { label: "Large", price: "$4.95" },
+        ],
       },
       {
         name: "Iced Americano",
         description: "Bold espresso shots poured over cold water and ice",
-        sizes: [{ label: "", price: "$4.55" }],
+        sizes: [
+          { label: "Regular", price: "$4.55" },
+          { label: "Large", price: "$4.95" },
+        ],
       },
       {
         name: "Iced Latte",
         description: "Espresso and cold milk over ice with silky foam",
-        sizes: [{ label: "", price: "$5.50" }],
+        sizes: [
+          { label: "Regular", price: "$5.50" },
+          { label: "Large", price: "$5.95" },
+        ],
       },
       {
         name: "Iced Mocha",
         description: "Espresso, chocolate, and cold milk over ice",
-        sizes: [{ label: "", price: "$5.75" }],
+        sizes: [
+          { label: "Regular", price: "$5.75" },
+          { label: "Large", price: "$6.25" },
+        ],
       },
       {
         name: "Iced Chai Latte",
         description: "Spiced chai and cold milk served over ice",
-        sizes: [{ label: "", price: "$5.75" }],
+        sizes: [
+          { label: "Regular", price: "$5.75" },
+          { label: "Large", price: "$6.25" },
+        ],
       },
       {
         name: "Iced Chocolate",
@@ -494,12 +594,81 @@ export const cakeMenu = [
     ],
   },
   {
-    category: "Homemade Meals",
-    note: "A short rotating menu. Ask what's on today.",
+    category: "Mom's Meal",
+    note: "Alacarte, or as a Perfect Plate with the sandwich and soup of the day.",
     items: [
-      { name: "Soup & Half Sandwich", sizes: [{ label: "", price: "$11" }] },
-      { name: "Chicken Adobo Plate", sizes: [{ label: "", price: "$14" }] },
-      { name: "Seasonal Quiche & Salad", sizes: [{ label: "", price: "$13" }] },
+      {
+        name: "Turkey Bacon Club",
+        sizes: [
+          { label: "Alacarte", price: "$12.99" },
+          { label: "Perfect Plate", price: "$18.99" },
+        ],
+      },
+      {
+        name: "Smoked Ham & Bacon",
+        sizes: [
+          { label: "Alacarte", price: "$12.99" },
+          { label: "Perfect Plate", price: "$18.99" },
+        ],
+      },
+      {
+        name: "Ham & Turkey",
+        sizes: [
+          { label: "Alacarte", price: "$10.99" },
+          { label: "Perfect Plate", price: "$17.99" },
+        ],
+      },
+      {
+        name: "BLT",
+        sizes: [
+          { label: "Alacarte", price: "$11.85" },
+          { label: "Perfect Plate", price: "$18.00" },
+        ],
+      },
+      {
+        name: "Crispy Chicken",
+        sizes: [
+          { label: "Alacarte", price: "$10.99" },
+          { label: "Perfect Plate", price: "$17.99" },
+        ],
+      },
+      {
+        name: "Veggie Sandwich",
+        sizes: [
+          { label: "Alacarte", price: "$7.85" },
+          { label: "Perfect Plate", price: "$13.85" },
+        ],
+      },
+      {
+        name: "Turkey & Cheese Melt",
+        sizes: [
+          { label: "Alacarte", price: "$10.95" },
+          { label: "Perfect Plate", price: "$16.95" },
+        ],
+      },
+      {
+        name: "Ham & Cheese Melt",
+        sizes: [
+          { label: "Alacarte", price: "$11.99" },
+          { label: "Perfect Plate", price: "$17.99" },
+        ],
+      },
+      {
+        name: "Grilled Cheese",
+        sizes: [
+          { label: "Alacarte", price: "$8.99" },
+          { label: "Perfect Plate", price: "$14.99" },
+        ],
+      },
+      {
+        name: "Cheese Hotdog Sandwich",
+        sizes: [
+          { label: "Alacarte", price: "$7.99" },
+          { label: "Perfect Plate", price: "$13.99" },
+        ],
+      },
+      { name: "Mushroom Soup", sizes: [{ label: "Bowl", price: "$6.50" }] },
+      { name: "Cream of Broccoli Soup", sizes: [{ label: "Bowl", price: "$6.50" }] },
     ],
   },
 ] as const;
