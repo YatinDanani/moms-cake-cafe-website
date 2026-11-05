@@ -163,20 +163,6 @@ export function CustomCakeForm() {
       </div>
 
       <div>
-        <label htmlFor="budget" className={labelClass}>Budget (optional)</label>
-        <input
-          id="budget"
-          name="budget"
-          type="text"
-          placeholder="e.g. $80–120"
-          className={fieldClass}
-        />
-        <p className="mt-1.5 text-xs text-cocoa/60">
-          This helps us suggest options. We confirm final pricing after reviewing your design.
-        </p>
-      </div>
-
-      <div>
         <label htmlFor="notes" className={labelClass}>
           Design notes & inspiration
         </label>
