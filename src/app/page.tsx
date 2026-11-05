@@ -152,6 +152,15 @@ export default async function Home() {
               </figure>
             ))}
           </div>
+          <a
+            href={business.mapLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-latte hover:text-cream transition-colors"
+          >
+            Read more reviews on Google
+            <ExternalLinkIcon className="h-4 w-4" />
+          </a>
         </div>
       </section>
 
