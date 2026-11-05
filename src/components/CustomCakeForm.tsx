@@ -125,6 +125,10 @@ export function CustomCakeForm() {
             <p className="mt-1 text-xs text-coffee font-medium">{dateError}</p>
           )}
         </div>
+        <div>
+          <label htmlFor="pickupTime" className={labelClass}>Pickup time</label>
+          <input id="pickupTime" name="pickupTime" type="time" className={fieldClass} />
+        </div>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-5">
