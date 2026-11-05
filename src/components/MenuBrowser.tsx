@@ -102,7 +102,7 @@ export function MenuBrowser({ menu }: { menu: Menu }) {
             if (columnLabels) {
               return (
                 <div className="mt-6 overflow-x-auto">
-                  <table className="w-full border-t border-b border-cocoa/10">
+                  <table className="w-full border-b border-cocoa/10">
                     <thead>
                       <tr className="border-b border-cocoa/10">
                         <th className="text-left font-medium text-xs uppercase tracking-wide text-cocoa/50 pb-2 pt-3" />
