@@ -2,10 +2,25 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import type { Menu } from "@/lib/siteOverrides";
+import type { Menu, MenuItem } from "@/lib/siteOverrides";
 import { CakeSliceIcon } from "./Icons";
 
 const FEATURED_CATEGORY = "Signature Cakes";
+
+// If every item in a category shares the same ordered, non-empty set of
+// size labels (e.g. every drink has Small/Medium/Large), those labels can
+// be shown once as column headers instead of repeated on every row. Mixed
+// categories (some items with different or no labels) fall back to the
+// simpler inline "price · label" list.
+function getUniformSizeLabels(items: MenuItem[]): string[] | null {
+  const first = items[0]?.sizes.map((s) => s.label) ?? [];
+  if (first.length === 0 || first.some((label) => !label)) return null;
+  const allMatch = items.every(
+    (item) =>
+      item.sizes.length === first.length && item.sizes.every((s, i) => s.label === first[i])
+  );
+  return allMatch ? first : null;
+}
 
 export function MenuBrowser({ menu }: { menu: Menu }) {
   const [activeCategory, setActiveCategory] = useState(
@@ -81,39 +96,91 @@ export function MenuBrowser({ menu }: { menu: Menu }) {
             ))}
           </div>
         ) : (
-          <ul className="mt-6 divide-y divide-cocoa/10 border-t border-b border-cocoa/10">
-            {active.items.map((item) => (
-              <li key={item.name} className="flex items-start justify-between py-3.5 gap-4">
-                <div className="flex items-start gap-3">
-                  {item.photo && (
-                    <div className="relative h-14 w-14 shrink-0 rounded-xl overflow-hidden">
-                      <Image
-                        src={`/api/photos/${item.photo}`}
-                        alt=""
-                        fill
-                        sizes="56px"
-                        className="object-cover"
-                      />
+          (() => {
+            const columnLabels = getUniformSizeLabels(active.items);
+
+            if (columnLabels) {
+              return (
+                <div className="mt-6 overflow-x-auto">
+                  <table className="w-full border-t border-b border-cocoa/10">
+                    <thead>
+                      <tr className="border-b border-cocoa/10">
+                        <th className="text-left font-medium text-xs uppercase tracking-wide text-cocoa/50 pb-2 pt-3" />
+                        {columnLabels.map((label) => (
+                          <th
+                            key={label}
+                            className="text-right font-medium text-xs uppercase tracking-wide text-cocoa/50 pb-2 pt-3 pl-4 whitespace-nowrap"
+                          >
+                            {label}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-cocoa/10">
+                      {active.items.map((item) => (
+                        <tr key={item.name}>
+                          <td className="py-3.5 pr-4 align-top">
+                            <p className="font-medium">{item.name}</p>
+                            {item.description && (
+                              <p className="mt-0.5 text-sm text-cocoa/60 max-w-sm">
+                                {item.description}
+                              </p>
+                            )}
+                          </td>
+                          {item.sizes.map((size) => (
+                            <td
+                              key={size.label}
+                              className="py-3.5 pl-4 align-top text-right text-cocoa/70 whitespace-nowrap text-sm"
+                            >
+                              {size.price}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              );
+            }
+
+            return (
+              <ul className="mt-6 divide-y divide-cocoa/10 border-t border-b border-cocoa/10">
+                {active.items.map((item) => (
+                  <li key={item.name} className="flex items-start justify-between py-3.5 gap-4">
+                    <div className="flex items-start gap-3">
+                      {item.photo && (
+                        <div className="relative h-14 w-14 shrink-0 rounded-xl overflow-hidden">
+                          <Image
+                            src={`/api/photos/${item.photo}`}
+                            alt=""
+                            fill
+                            sizes="56px"
+                            className="object-cover"
+                          />
+                        </div>
+                      )}
+                      <div>
+                        <p className="font-medium">{item.name}</p>
+                        {item.description && (
+                          <p className="mt-0.5 text-sm text-cocoa/60 max-w-sm">
+                            {item.description}
+                          </p>
+                        )}
+                      </div>
                     </div>
-                  )}
-                  <div>
-                    <p className="font-medium">{item.name}</p>
-                    {item.description && (
-                      <p className="mt-0.5 text-sm text-cocoa/60 max-w-sm">{item.description}</p>
-                    )}
-                  </div>
-                </div>
-                <div className="text-right shrink-0">
-                  {item.sizes.map((size) => (
-                    <p key={size.label} className="text-cocoa/70 whitespace-nowrap text-sm">
-                      {size.price}
-                      {size.label && <span className="text-cocoa/45"> · {size.label}</span>}
-                    </p>
-                  ))}
-                </div>
-              </li>
-            ))}
-          </ul>
+                    <div className="text-right shrink-0">
+                      {item.sizes.map((size) => (
+                        <p key={size.label} className="text-cocoa/70 whitespace-nowrap text-sm">
+                          {size.price}
+                          {size.label && <span className="text-cocoa/45"> · {size.label}</span>}
+                        </p>
+                      ))}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            );
+          })()
         )}
       </div>
     </div>
