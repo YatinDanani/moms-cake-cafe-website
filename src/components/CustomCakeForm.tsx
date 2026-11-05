@@ -8,6 +8,10 @@ const fieldClass =
   "w-full rounded-xl border border-cocoa/15 bg-white px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-coffee";
 const labelClass = "block text-sm font-semibold mb-1.5";
 const MIN_LEAD_DAYS = 2;
+// Matches business.hours in content.ts — keep these in sync if hours change.
+const STORE_OPEN = "08:00";
+const STORE_CLOSE_SUNDAY = "17:00";
+const STORE_CLOSE_OTHER_DAYS = "18:00";
 type Status = "idle" | "sending" | "sent" | "error";
 
 function formatLocalDate(d: Date) {
@@ -17,11 +21,29 @@ function formatLocalDate(d: Date) {
   return `${y}-${m}-${day}`;
 }
 
+function getWeekday(dateStr: string): number {
+  const [y, m, d] = dateStr.split("-").map(Number);
+  return new Date(y, m - 1, d).getDay();
+}
+
+function storeCloseTime(dateStr: string): string {
+  return dateStr && getWeekday(dateStr) === 0 ? STORE_CLOSE_SUNDAY : STORE_CLOSE_OTHER_DAYS;
+}
+
+function formatTimeLabel(time: string): string {
+  const [h, m] = time.split(":").map(Number);
+  const period = h >= 12 ? "PM" : "AM";
+  const hour12 = h % 12 === 0 ? 12 : h % 12;
+  return `${hour12}:${String(m).padStart(2, "0")} ${period}`;
+}
+
 export function CustomCakeForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [dateError, setDateError] = useState("");
+  const [pickupError, setPickupError] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const dateInputRef = useRef<HTMLInputElement>(null);
+  const pickupTimeInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const minDateRef = useRef("");
 
@@ -33,6 +55,10 @@ export function CustomCakeForm() {
     const minDate = formatLocalDate(d);
     minDateRef.current = minDate;
     if (dateInputRef.current) dateInputRef.current.min = minDate;
+    if (pickupTimeInputRef.current) {
+      pickupTimeInputRef.current.min = STORE_OPEN;
+      pickupTimeInputRef.current.max = STORE_CLOSE_OTHER_DAYS;
+    }
   }, []);
 
   const previews = useMemo(() => files.map((f) => URL.createObjectURL(f)), [files]);
@@ -61,6 +87,16 @@ export function CustomCakeForm() {
       return;
     }
     setDateError("");
+
+    const pickupTime = String(formData.get("pickupTime") ?? "");
+    const closeTime = storeCloseTime(date);
+    if (pickupTime && (pickupTime < STORE_OPEN || pickupTime > closeTime)) {
+      setPickupError(
+        `Please choose a pickup time between ${formatTimeLabel(STORE_OPEN)} and ${formatTimeLabel(closeTime)}.`
+      );
+      return;
+    }
+    setPickupError("");
 
     // The hidden file input is cleared after every pick (so the same file
     // can be re-selected), so its native value is stale at submit time —
@@ -115,7 +151,15 @@ export function CustomCakeForm() {
             id="date"
             name="date"
             type="date"
-            onChange={() => setDateError("")}
+            onChange={(e) => {
+              setDateError("");
+              setPickupError("");
+              const closeTime = storeCloseTime(e.target.value);
+              if (pickupTimeInputRef.current) {
+                pickupTimeInputRef.current.min = STORE_OPEN;
+                pickupTimeInputRef.current.max = closeTime;
+              }
+            }}
             className={fieldClass}
           />
           <p className="mt-1.5 text-xs text-cocoa/60">
@@ -127,7 +171,18 @@ export function CustomCakeForm() {
         </div>
         <div>
           <label htmlFor="pickupTime" className={labelClass}>Pickup time</label>
-          <input id="pickupTime" name="pickupTime" type="time" className={fieldClass} />
+          <input
+            ref={pickupTimeInputRef}
+            id="pickupTime"
+            name="pickupTime"
+            type="time"
+            onChange={() => setPickupError("")}
+            className={fieldClass}
+          />
+          <p className="mt-1.5 text-xs text-cocoa/60">Within store hours for the date you choose.</p>
+          {pickupError && (
+            <p className="mt-1 text-xs text-coffee font-medium">{pickupError}</p>
+          )}
         </div>
       </div>
 
