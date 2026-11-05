@@ -317,11 +317,19 @@ export const cakeMenu = [
     ],
   },
   {
-    category: "Coffee",
+    category: "Hot Drinks",
     note: "",
     items: [
       {
-        name: "Café Latte",
+        name: "Brewed Coffee",
+        sizes: [
+          { label: "Small", price: "$2.95" },
+          { label: "Medium", price: "$3.35" },
+          { label: "Large", price: "$3.75" },
+        ],
+      },
+      {
+        name: "Latte",
         description: "Smooth espresso with steamed milk and silky microfoam",
         sizes: [
           { label: "Small", price: "$4.65" },
@@ -339,12 +347,46 @@ export const cakeMenu = [
         ],
       },
       {
-        name: "Flat White",
-        description: "Velvety double-shot espresso with microfoam",
+        name: "Mocha",
+        description: "Espresso, chocolate, steamed milk, and whipped cream",
         sizes: [
-          { label: "Small", price: "$4.85" },
-          { label: "Medium", price: "$5.45" },
-          { label: "Large", price: "$5.65" },
+          { label: "Small", price: "$5.00" },
+          { label: "Medium", price: "$5.65" },
+          { label: "Large", price: "$6.15" },
+        ],
+      },
+      {
+        name: "Hot Chocolate",
+        description: "Rich Belgian chocolate with steamed milk and marshmallows",
+        sizes: [
+          { label: "Small", price: "$4.25" },
+          { label: "Medium", price: "$4.65" },
+          { label: "Large", price: "$5.05" },
+        ],
+      },
+      {
+        name: "Africano",
+        sizes: [
+          { label: "Small", price: "$4.25" },
+          { label: "Medium", price: "$4.65" },
+          { label: "Large", price: "$5.05" },
+        ],
+      },
+      {
+        name: "Caramel Macchiato",
+        sizes: [
+          { label: "Small", price: "$5.25" },
+          { label: "Medium", price: "$5.65" },
+          { label: "Large", price: "$6.05" },
+        ],
+      },
+      {
+        name: "London Fog",
+        description: "Earl Grey tea with steamed milk and vanilla",
+        sizes: [
+          { label: "Small", price: "$4.75" },
+          { label: "Medium", price: "$5.15" },
+          { label: "Large", price: "$5.55" },
         ],
       },
       {
@@ -354,53 +396,6 @@ export const cakeMenu = [
           { label: "Small", price: "$3.55" },
           { label: "Medium", price: "$3.95" },
           { label: "Large", price: "$4.35" },
-        ],
-      },
-      {
-        name: "Mocha",
-        description: "Espresso, chocolate, steamed milk, and whipped cream",
-        sizes: [
-          { label: "Small", price: "$5" },
-          { label: "Medium", price: "$5.65" },
-          { label: "Large", price: "$6.15" },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Non-Coffee Hot Beverages",
-    note: "",
-    items: [
-      {
-        name: "Hot Matcha Latte",
-        description: "Ceremonial-grade matcha with creamy steamed milk",
-        sizes: [
-          { label: "Small", price: "$5.25" },
-          { label: "Medium", price: "$5.65" },
-          { label: "Large", price: "$6.05" },
-        ],
-      },
-      {
-        name: "Hot Chocolate",
-        description: "Rich Belgian chocolate with steamed milk and marshmallows",
-        sizes: [
-          { label: "Small", price: "$4.25" },
-          { label: "Medium", price: "$4.85" },
-          { label: "Large", price: "$5.05" },
-        ],
-      },
-      {
-        name: "Hot Teas",
-        description: "House-brewed selection of premium loose-leaf teas",
-        sizes: [{ label: "", price: "$3.65" }],
-      },
-      {
-        name: "London Fog",
-        description: "Earl Grey tea with steamed milk and vanilla",
-        sizes: [
-          { label: "Small", price: "$4.75" },
-          { label: "Medium", price: "$5.15" },
-          { label: "Large", price: "$5.55" },
         ],
       },
     ],
