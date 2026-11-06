@@ -2,40 +2,14 @@
 
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { submitNetlifyForm } from "@/lib/netlifyForms";
+import { STORE_OPEN, formatTimeLabel, minLeadDate, storeCloseTime } from "@/lib/pickupHours";
 import { UploadIcon, CloseIcon } from "./Icons";
 
 const fieldClass =
   "w-full rounded-xl border border-cocoa/15 bg-white px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-coffee";
 const labelClass = "block text-sm font-semibold mb-1.5";
 const MIN_LEAD_DAYS = 2;
-// Matches business.hours in content.ts — keep these in sync if hours change.
-const STORE_OPEN = "08:00";
-const STORE_CLOSE_SUNDAY = "17:00";
-const STORE_CLOSE_OTHER_DAYS = "18:00";
 type Status = "idle" | "sending" | "sent" | "error";
-
-function formatLocalDate(d: Date) {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-}
-
-function getWeekday(dateStr: string): number {
-  const [y, m, d] = dateStr.split("-").map(Number);
-  return new Date(y, m - 1, d).getDay();
-}
-
-function storeCloseTime(dateStr: string): string {
-  return dateStr && getWeekday(dateStr) === 0 ? STORE_CLOSE_SUNDAY : STORE_CLOSE_OTHER_DAYS;
-}
-
-function formatTimeLabel(time: string): string {
-  const [h, m] = time.split(":").map(Number);
-  const period = h >= 12 ? "PM" : "AM";
-  const hour12 = h % 12 === 0 ? 12 : h % 12;
-  return `${hour12}:${String(m).padStart(2, "0")} ${period}`;
-}
 
 export function CustomCakeForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -50,14 +24,12 @@ export function CustomCakeForm() {
   // Computed client-side (not during render) so the server-rendered HTML
   // never bakes in "today" — the date input gets its floor after mount.
   useEffect(() => {
-    const d = new Date();
-    d.setDate(d.getDate() + MIN_LEAD_DAYS);
-    const minDate = formatLocalDate(d);
+    const minDate = minLeadDate(MIN_LEAD_DAYS);
     minDateRef.current = minDate;
     if (dateInputRef.current) dateInputRef.current.min = minDate;
     if (pickupTimeInputRef.current) {
       pickupTimeInputRef.current.min = STORE_OPEN;
-      pickupTimeInputRef.current.max = STORE_CLOSE_OTHER_DAYS;
+      pickupTimeInputRef.current.max = storeCloseTime("");
     }
   }, []);
 

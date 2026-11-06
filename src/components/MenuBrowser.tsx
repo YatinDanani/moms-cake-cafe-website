@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import type { Menu, MenuItem } from "@/lib/siteOverrides";
 import { CakeSliceIcon } from "./Icons";
 
@@ -90,6 +91,12 @@ export function MenuBrowser({ menu }: { menu: Menu }) {
                       </span>
                     ))}
                   </div>
+                  <Link
+                    href={`/order-cake?cake=${encodeURIComponent(item.name)}`}
+                    className="mt-4 inline-flex items-center rounded-full border-2 border-cocoa/15 px-4 py-2 text-sm font-semibold text-cocoa hover:border-coffee hover:text-coffee transition-colors"
+                  >
+                    Order this cake
+                  </Link>
                 </div>
               </div>
             ))}
