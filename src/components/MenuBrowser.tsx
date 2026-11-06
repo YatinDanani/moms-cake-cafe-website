@@ -7,6 +7,9 @@ import type { Menu, MenuItem } from "@/lib/siteOverrides";
 import { CakeSliceIcon } from "./Icons";
 
 const FEATURED_CATEGORY = "Signature Cakes";
+// Categories with an "Order this" link to /order-cake, alongside the
+// featured category (which gets its own card-grid treatment below).
+const ORDERABLE_CATEGORIES = ["Cupcakes"];
 
 // If every item in a category shares the same ordered, non-empty set of
 // size labels (e.g. every drink has Small/Medium/Large), those labels can
@@ -171,6 +174,14 @@ export function MenuBrowser({ menu }: { menu: Menu }) {
                           <p className="mt-0.5 text-sm text-cocoa/60 max-w-sm">
                             {item.description}
                           </p>
+                        )}
+                        {ORDERABLE_CATEGORIES.includes(active.category) && (
+                          <Link
+                            href={`/order-cake?cake=${encodeURIComponent(item.name)}`}
+                            className="mt-1 inline-block text-xs font-semibold text-coffee hover:text-coffee-dark"
+                          >
+                            Order this
+                          </Link>
                         )}
                       </div>
                     </div>

@@ -10,19 +10,21 @@ const fieldClass =
 const labelClass = "block text-sm font-semibold mb-1.5";
 const MIN_LEAD_DAYS = 1;
 type Status = "idle" | "sending" | "sent" | "error";
+type Section = { category: string; items: MenuItem[] };
 
-export function SignatureCakeOrderForm({
-  cakes,
-  initialCake,
+export function MenuOrderForm({
+  sections,
+  initialItem,
 }: {
-  cakes: MenuItem[];
-  initialCake?: string;
+  sections: Section[];
+  initialItem?: string;
 }) {
+  const allItems = sections.flatMap((s) => s.items);
   const [status, setStatus] = useState<Status>("idle");
   const [dateError, setDateError] = useState("");
   const [pickupError, setPickupError] = useState("");
-  const [cakeName, setCakeName] = useState(
-    cakes.some((c) => c.name === initialCake) ? (initialCake as string) : (cakes[0]?.name ?? "")
+  const [itemName, setItemName] = useState(
+    allItems.some((i) => i.name === initialItem) ? (initialItem as string) : (allItems[0]?.name ?? "")
   );
   const dateInputRef = useRef<HTMLInputElement>(null);
   const pickupTimeInputRef = useRef<HTMLInputElement>(null);
@@ -38,7 +40,7 @@ export function SignatureCakeOrderForm({
     }
   }, []);
 
-  const selectedCake = cakes.find((c) => c.name === cakeName);
+  const selectedItem = allItems.find((i) => i.name === itemName);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -68,17 +70,16 @@ export function SignatureCakeOrderForm({
       await submitNetlifyForm(formData);
       setStatus("sent");
       form.reset();
-      setCakeName(cakes[0]?.name ?? "");
+      setItemName(allItems[0]?.name ?? "");
     } catch {
       setStatus("error");
     }
   }
 
-  if (cakes.length === 0) {
+  if (allItems.length === 0) {
     return (
       <p className="text-center text-cocoa/70">
-        The signature cake menu isn&apos;t available to order from right now. Please call or email
-        instead.
+        The menu isn&apos;t available to order from right now. Please call or email instead.
       </p>
     );
   }
@@ -100,25 +101,29 @@ export function SignatureCakeOrderForm({
 
       <div className="grid sm:grid-cols-2 gap-5">
         <div>
-          <label htmlFor="cake" className={labelClass}>Cake</label>
+          <label htmlFor="cake" className={labelClass}>Item</label>
           <select
             id="cake"
             name="cake"
-            value={cakeName}
-            onChange={(e) => setCakeName(e.target.value)}
+            value={itemName}
+            onChange={(e) => setItemName(e.target.value)}
             className={fieldClass}
           >
-            {cakes.map((cake) => (
-              <option key={cake.name} value={cake.name}>
-                {cake.name}
-              </option>
+            {sections.map((section) => (
+              <optgroup key={section.category} label={section.category}>
+                {section.items.map((item) => (
+                  <option key={item.name} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </select>
         </div>
         <div>
           <label htmlFor="size" className={labelClass}>Size</label>
-          <select id="size" name="size" className={fieldClass} key={cakeName}>
-            {selectedCake?.sizes.map((size) => (
+          <select id="size" name="size" className={fieldClass} key={itemName}>
+            {selectedItem?.sizes.map((size) => (
               <option key={size.label || "default"} value={size.label || "Standard"}>
                 {size.price}
                 {size.label && ` · ${size.label}`}
@@ -198,13 +203,13 @@ export function SignatureCakeOrderForm({
 
       <div>
         <label htmlFor="notes" className={labelClass}>
-          Anything to write on the cake? (optional)
+          Any special requests? (optional)
         </label>
         <textarea
           id="notes"
           name="notes"
           rows={3}
-          placeholder="e.g. Happy Birthday Sarah"
+          placeholder="e.g. Happy Birthday Sarah written on the cake"
           className={fieldClass}
         />
       </div>
