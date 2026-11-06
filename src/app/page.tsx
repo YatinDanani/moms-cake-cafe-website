@@ -1,9 +1,16 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { business, offerings, photoSlots, story } from "@/lib/content";
 import { getPhotoVersions, getPress, getVideos, getTestimonials } from "@/lib/siteOverrides";
 import { getYouTubeEmbedUrl } from "@/lib/youtube";
 import { ExternalLinkIcon } from "@/components/Icons";
+
+export const metadata: Metadata = {
+  title: "Mom's Cake Café | Custom Cakes & Filipino Sans Rival in Oak Bay, Victoria",
+  description:
+    "Filipino bakery and café on Oak Bay Ave in Victoria, BC. Custom cakes, ube cake, mango bravo, sans rival (sansrival), cupcakes, and coffee, made fresh in-house.",
+};
 
 const colorMap: Record<string, { bg: string; text: string }> = {
   coffee: { bg: "bg-coffee", text: "text-cream" },
@@ -47,9 +54,10 @@ export default async function Home() {
             </span>
           </h1>
           <p className="mt-6 text-lg text-cream/85 max-w-md">
-            A neighborhood café on Oak Bay Ave where custom cakes, cupcakes,
-            sansrival, and coffee come out of the same small kitchen that
-            started this whole thing.
+            A Filipino bakery and café on Oak Bay Ave, Victoria. Ube cake,
+            mango bravo, sans rival (sansrival), custom cakes, cupcakes, and
+            coffee, all out of the same small kitchen that started this whole
+            thing.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
