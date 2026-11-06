@@ -36,7 +36,7 @@ export function Navbar() {
 
         <div className="hidden lg:block">
           <Link
-            href="/custom-cakes"
+            href="/menu"
             className="inline-flex items-center rounded-full bg-coffee px-5 py-2.5 text-sm font-semibold text-cream hover:bg-coffee-dark transition-colors"
           >
             Order a cake
@@ -67,7 +67,7 @@ export function Navbar() {
             </Link>
           ))}
           <Link
-            href="/custom-cakes"
+            href="/menu"
             onClick={() => setOpen(false)}
             className="inline-flex justify-center rounded-full bg-coffee px-5 py-2.5 text-sm font-semibold text-cream"
           >
