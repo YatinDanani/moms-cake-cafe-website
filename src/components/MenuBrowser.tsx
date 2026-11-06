@@ -38,25 +38,28 @@ export function MenuBrowser({ menu }: { menu: Menu }) {
     <div>
       <div className="flex flex-wrap items-center justify-center gap-2">
         {menu.map((section) => (
-          <button
-            key={section.category}
-            type="button"
-            onClick={() => setActiveCategory(section.category)}
-            className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
-              section.category === activeCategory
-                ? "bg-coffee text-cream"
-                : "border-2 border-cocoa/15 text-cocoa hover:border-coffee hover:text-coffee"
-            }`}
-          >
-            {section.category}
-          </button>
+          <div key={section.category} className="contents">
+            <button
+              type="button"
+              onClick={() => setActiveCategory(section.category)}
+              className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                section.category === activeCategory
+                  ? "bg-coffee text-cream"
+                  : "border-2 border-cocoa/15 text-cocoa hover:border-coffee hover:text-coffee"
+              }`}
+            >
+              {section.category}
+            </button>
+            {section.category === FEATURED_CATEGORY && (
+              <Link
+                href="/custom-cakes"
+                className="inline-flex items-center rounded-full border-2 border-coffee px-4 py-2 text-sm font-semibold text-coffee hover:bg-coffee hover:text-cream transition-colors"
+              >
+                Custom Cake
+              </Link>
+            )}
+          </div>
         ))}
-        <Link
-          href="/custom-cakes"
-          className="inline-flex items-center rounded-full border-2 border-coffee px-4 py-2 text-sm font-semibold text-coffee hover:bg-coffee hover:text-cream transition-colors"
-        >
-          Custom Cake
-        </Link>
       </div>
 
       <div className="mt-10">
