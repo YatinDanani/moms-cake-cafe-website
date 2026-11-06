@@ -36,7 +36,7 @@ export function MenuBrowser({ menu }: { menu: Menu }) {
 
   return (
     <div>
-      <div className="flex flex-wrap justify-center gap-2">
+      <div className="flex flex-wrap items-center justify-center gap-2">
         {menu.map((section) => (
           <button
             key={section.category}
@@ -51,6 +51,12 @@ export function MenuBrowser({ menu }: { menu: Menu }) {
             {section.category}
           </button>
         ))}
+        <Link
+          href="/custom-cakes"
+          className="inline-flex items-center rounded-full border-2 border-coffee px-4 py-2 text-sm font-semibold text-coffee hover:bg-coffee hover:text-cream transition-colors"
+        >
+          Custom Cake
+        </Link>
       </div>
 
       <div className="mt-10">
